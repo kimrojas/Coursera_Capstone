@@ -24,15 +24,15 @@ The objective of this project is to find the best neighborhood in Toronto to ope
 
 2. **Geolocation data**
 - **Source**: https://cocl.us/Geospatial_data
-- **Description**: As the nominatim service is quite slow to use, a dataset is provided which contains the latitude and longitude of Postal codes. In the event the 
+- **Description**: As the nominatim service is quite slow to use, a dataset is provided which contains the latitude and longitude of Postal codes. In the event that a latitude and longitude entry is not in the dataset, I used **google maps API** to check for the details. 
+
+3. **Venue data**
+- **Source**: https://foursquare.com/developers/apps
+- **Description**: To explore each vicinity, we need some data about the various businesses local to the place. In this case, we query the foursquare API to see the local businesses. It returns the name, category and geolocation data of the establishments. This data is key in the analysis section where this data is used to create the clusters. 
+
+## B. Methodology
 
 
 
-- **Basic Toronto City data** [link](https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M) - Contains the data basic city data such as the boroughs and neighborhoods.
 
-- **Geolocation data** 
-    - Postal Address [link](https://cocl.us/Geospatial_data) - Postal address of each Borough in the Toronto City data.
-    - Geographical location via Google maps API - Postal code for Toronto thats not in the City data.   
-
-- **Venue data** via [Foursquare](https://foursquare.com/developers/apps) - Venue data to be used in exploring each region/place. In particular, this contains the loca businesses in the area including its geolocation.
 
