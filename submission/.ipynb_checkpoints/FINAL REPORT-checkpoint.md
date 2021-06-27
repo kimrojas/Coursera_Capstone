@@ -30,6 +30,10 @@ The objective of this project is to find the best neighborhood in Toronto to ope
 - **Source**: https://foursquare.com/developers/apps
 - **Description**: To explore each vicinity, we need some data about the various businesses local to the place. In this case, we query the foursquare API to see the local businesses. It returns the name, category and geolocation data of the establishments. This data is key in the analysis section where this data is used to create the clusters. 
 
+### Source Code
+
+The source code is presetend in notebook form as hosted in github [link](https://github.com/kimrojas/Coursera_Capstone/blob/main/week_4_capstone.ipynb)
+
 ---
 
 ## B. Methodology
@@ -194,4 +198,18 @@ By summarizing the data, we can get the following graphs
 <img src="images/plot.PNG" align="center">
 </div>
 
-For the 
+It apears that Cluster 1 actually has a most number of neighborhood, however, it also has the lowest average number of japanese restaurants. 
+
+Alternatively, an opposite remark may be said to the Cluster 4 where it has the lowest number of neighborhood while having the highest average number of japanese restaurants. 
+
+---
+
+## E. Conclusion
+
+From the perspective of a tourist, it may be best to go to the neighborhoods in cluster 4. There are a lot of Japanese restaurants that will cater to the adventurous pallete. 
+
+From the perspective of a businessman, the optimal location is in cluster 1, where there are a lot of potential demands for a japanese restaurant while having the least competition around the vicinity. Of course it might be possible that these neighborhoods are less commercialize as compared to cluster 4. 
+
+
+
+
