@@ -25,7 +25,7 @@ For this project we need these following data:
     - Postal Address [link](https://cocl.us/Geospatial_data) - Postal address of each Borough in the Toronto City data.
     - Geographical location via Google maps API - Postal code for Toronto thats not in the City data.   
 
-- **Venue data** via [Foursquare](https://foursquare.com/developers/apps) - Venue data to be used in exploring each region/place.
+- **Venue data** via [Foursquare](https://foursquare.com/developers/apps) - Venue data to be used in exploring each region/place. In particular, this contains the loca businesses in the area including its geolocation.
 
 ### **Methodology**
 In this section, we prepare the dataframe to be use for the modelling. The summary of the flow is:
