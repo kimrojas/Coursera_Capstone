@@ -30,9 +30,168 @@ The objective of this project is to find the best neighborhood in Toronto to ope
 - **Source**: https://foursquare.com/developers/apps
 - **Description**: To explore each vicinity, we need some data about the various businesses local to the place. In this case, we query the foursquare API to see the local businesses. It returns the name, category and geolocation data of the establishments. This data is key in the analysis section where this data is used to create the clusters. 
 
+---
+
 ## B. Methodology
 
+In this section, we prepare the dataframe to be use for the modelling. The summary of the flow is:
+
+1. Webscrape the data from city info webpage
+2. Get and connect the Postal Codes to the neighborhoods
+3. Check the business venues in the vicinity of the neighborhood using Foursquare 
+4. Use K-means clustering to group the neighborhoods
+5. Create an analysis of the data
+
+
+### Python libraries
+
+```python
+# For webscraping 
+from bs4 import BeautifulSoup as bs
+import requests
+import json # library to handle JSON files
+from pandas.io.json import json_normalize # tranform JSON file into a pandas dataframe
+
+# For Data manipulation
+import pandas as pd
+import numpy as np
+
+import folium # For map
+import keys # For identity keys, separate for security reasons
+import googlemaps # For lon lat request inplace of nominatim
+from sklearn.cluster import KMeans # For clustering
+
+# For graph and folium colors
+import matplotlib.pyplot  as plt
+import matplotlib.cm as cm
+import matplotlib.colors as colors
+
+from tqdm import tqdm
+import seaborn as sns
+```
 
 
 
 
+---
+
+## C. Results
+
+### Webscraping
+
+In this section we used the Beautifulsoup package to parse the webpage. 
+We can do that using the following code:
+```python
+# Get the neighborhood data using beautiful soup 
+url='https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M'
+result = requests.get(url)
+data_html = bs(result.content)
+soup = bs(str(data_html)) # read the data into a Pandas Dataframe
+```
+
+After some corrections and basic cleanup on some data entries, the city dataset should look like this. 
+
+<div align="center">
+<img src="images/webscape.JPG" align="center">
+</div>
+
+### Geolocation of Postal codes
+
+Next we take the postal codes of each borough and neighborhood using the dataset given. 
+
+```python
+# get the latitude and the longitude coordinates of each Postal code
+geo_url = "https://cocl.us/Geospatial_data" # rather than nominatim (which is so slow), we use this data set of postal codes instead.
+
+geo_df = pd.read_csv(geo_url)
+geo_df.rename(columns={'Postal Code': 'PostalCode'}, inplace=True) # shorten name
+geo_df.head()
+```
+<div align="center">
+<img src="images/postalcode.JPG" align="center">
+</div>
+
+### City data
+Finally, combine both city and geolocation data and apply a filter to only include the Toronto area
+```Python
+df = pd.merge(df, geo_df, on='PostalCode')
+toronto_data = df[df['Borough'].str.contains("Toronto")].reset_index()
+```
+
+<div align="center">
+<img src="images/citydata.PNG" align="center">
+</div>
+
+### Mapping out the city
+
+<div align="center">
+<img src="images/initialcity.PNG" align="center">
+</div>
+
+### Venue exploration
+
+Using the Foursquare API, we can query the 100 nearby location per venue. With this API, we can get what businesses are in the locality. 
+
+On our queary, we actually get at least 1505 businesses with at least 216 unique categories.  
+
+Here is an example of the data we've retrieved. 
+
+<div align="center">
+<img src="images/foursquare.PNG" align="center">
+</div>
+
+Of course, we also implemented a onehot encoding transformation for the venue data such that we get the frequency as the data itself. However, for the sake of clarity in this report, it will not be shown as it is not that crucial for the analysis.
+
+---
+
+## D. Analysis
+
+### Defining the feature
+
+We are most interested in the frequency of Japanese restaurants, hence, this will be our main feature for the clustering. 
+
+```python
+jap = toronto_grouped[["Neighborhood","Japanese Restaurant"]]
+jap.head()
+```
+
+<div align="center">
+<img src="images/limitjap.PNG" align="center">
+</div>
+
+### Optimal K value
+
+Since a K-means clustering method is highly reliant on the number of clusters, it is important to examine how many clusters are needed for our study. We can do this using the **Elbow method**. This is basically testing out various K values and seeing where the inflection point is. 
+
+
+<div align="center">
+<img src="images/elbow.PNG" align="center">
+</div>
+
+Our results show that the optimal K value is 4. Hence, K=4 will be used to divide our dataset. 
+
+### Applying the K-mean clustering
+
+With K=4, we applied the K-means clustering method to divide and label the locations. 
+
+The raw data looks like this: 
+
+<div align="center">
+<img src="images/label.PNG" align="center">
+</div>
+
+Additionally, we can visualize the neighborhoods' location with respect to its cluster division. Note that the same colors signifies the same division. 
+
+<div align="center">
+<img src="images/clustermap.PNG" align="center">
+</div>
+
+### Data analysis
+
+By summarizing the data, we can get the following graphs
+
+<div align="center">
+<img src="images/plot.PNG" align="center">
+</div>
+
+For the 
