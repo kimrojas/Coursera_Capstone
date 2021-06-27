@@ -4,18 +4,28 @@
     <h3>by Kurt Irvin M. Rojas</h3>
 </div>
 
-### **Objective**
+## A. Introduction
+
+### Objective
 Japanese cuisine is undoubtly one of most famous cuisine. However, from the perspective of an investor or a chef dreaming of opening his/her own japanese restaurant, it is a remarkable challenge in getting into the market due to the highly saturated supply of japanese food. 
 
 The objective of this project is to find the best neighborhood in Toronto to open a Japanese restaurant. In this project, we'll be trying to create a projection on which place is best to start a japanese restaurant using Foursquare location data and clustering analysis. 
 
-### **Target Audiance**
+### Target Audience
 * Japanese chef's trying to open their own restaurant.
 * Investors looking to establish a business related to japanese food. 
 * Tourists who are interested in Japanese cuisine. 
 
-### **Data Description**
-For this project we need these following data:
+### Data Description 
+
+1. **Basic Toronto City data**
+- **Source**: https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M
+- **Description**: The wikipedia page containts the basic city data of Canada. From here, we can get the specific boroughs and neighborhoods, as well as its corresponding postal codes. 
+
+2. **Geolocation data**
+- **Source**: https://cocl.us/Geospatial_data
+- **Description**: As the nominatim service is quite slow to use, a dataset is provided which contains the latitude and longitude of Postal codes. In the event the 
+
 
 
 - **Basic Toronto City data** [link](https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M) - Contains the data basic city data such as the boroughs and neighborhoods.
@@ -25,14 +35,4 @@ For this project we need these following data:
     - Geographical location via Google maps API - Postal code for Toronto thats not in the City data.   
 
 - **Venue data** via [Foursquare](https://foursquare.com/developers/apps) - Venue data to be used in exploring each region/place. In particular, this contains the loca businesses in the area including its geolocation.
-
-### **Methodology**
-In this section, we prepare the dataframe to be use for the modelling. The summary of the flow is:
-
-1. Webscrape the data from city info webpage
-2. Get and connect the Postal Codes to the neighborhoods
-3. Check the business venues in the vicinity of the neighborhood using Foursquare 
-4. Use K-means clustering to group the neighborhoods
-5. Create an analysis of the data
-
 
